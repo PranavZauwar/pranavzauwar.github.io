@@ -1,0 +1,124 @@
+<head>
+	<meta charset="utf-8">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<link rel="stylesheet" media="all" type="text/css" href="/assets/css/sudokuJS.css">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+
+		.wrap {
+			padding: 2em 1em;
+			width: 400px;
+			max-width: 100%;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		@media(min-width: 30em) {
+			.wrap {
+				width: 490px;
+			}
+
+			.sudoku-board input {
+				font-size: 24px;
+				font-size: 1.5rem;
+			}
+
+			.sudoku-board .candidates {
+				font-size: .8em;
+			}
+		}
+	</style>
+
+	<title>Sudoku</title>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="/assets/js/sudokuJS.js"></script>
+</head>
+
+<body background="/assets/img/source.gif">
+	<div class="wrap">
+		<h1 style="text-align: center; font-family: monospace; color: whitesmoke;">SUDOKU</h1>
+		<!--the only required html-->
+		<div id="sudoku" class="sudoku-board">
+		</div>
+
+		<!--solve buttons-->
+		<p style="font-family:monospace; color:whitesmoke; font-size: large;">
+			DIFFICULTY IN SOLVING..??
+		</p>
+		<br>
+		<button type="button" style="font-family:monospace" class="sudokubutton5 js-solve-step-btn">Know a
+			number</button>
+		<button type="button" style="font-family:monospace; " class=" sudokubutton6 js-solve-all-btn">Solve
+			whole board</button>
+
+
+	</div>
+
+	<script>
+		var board = [, 5, , , , 2, 3, 8, , , 1, , , , 4, , , 5, , 2, , , 5, , , , , 5, , 7, 8, , , 2, 1, , 4, 6, , 2, 3, 7, ,
+			5, 8, , 9, 8, , , 5, 4, , 7, , , , , 6, , , 4, , 1, , , 9, , , , 6, , , 7, 3, 4, , , , 9, undefined
+		]
+		//NOTE: if last cell of board is empty 'undefined' has to be used as value!
+
+		var mySudokuJS = $("#sudoku").sudokuJS({
+			board: board
+		});
+
+		$(".js-solve-step-btn").on("click", mySudokuJS.solveStep);
+		$(".js-solve-all-btn").on("click", mySudokuJS.solveAll);
+	</script>
+	<script language="JavaScript">
+		window.onload = function () {
+			document.addEventListener(
+				"contextmenu",
+				function (e) {
+					e.preventDefault();
+				},
+				false
+			);
+			document.addEventListener(
+				"keydown",
+				function (e) {
+					if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+						disabledEvent(e);
+					}
+					if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+						disabledEvent(e);
+					}
+					if (
+						e.keyCode == 83 &&
+						(navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)
+					) {
+						disabledEvent(e);
+					}
+					if (e.ctrlKey && e.keyCode == 85) {
+						disabledEvent(e);
+					}
+					if (event.keyCode == 123) {
+						disabledEvent(e);
+					}
+				},
+				false
+			);
+
+			function disabledEvent(e) {
+				if (e.stopPropagation) {
+					e.stopPropagation();
+				} else if (window.event) {
+					window.event.cancelBubble = true;
+				}
+				e.preventDefault();
+				return false;
+			}
+		};
+	</script>
+</body>
+
+</html>
